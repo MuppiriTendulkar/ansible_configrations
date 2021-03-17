@@ -36,4 +36,3 @@
       name: "{{package_name}}"
       state: started
 
-
