@@ -1,0 +1,31 @@
+- hosts: all
+  become: true
+  gather_facts: false
+  vars:
+    package_name: apache2
+    name: Tendulkar
+
+  tasks:
+
+  - name: Install apache2
+    apt:
+      name: "{{package_name}}"
+      state: present
+
+  - name: copy Index.html
+    template:
+      src: index.html
+      dest: /var/www/html/index.html
+    notify:
+    - start apache2 service
+
+  - name: debug
+    debug:
+      msg: "after copy task name variable value: {{name}}"
+
+  handlers:
+
+  - name: start apache2 service
+    service:
+      name: "{{package_name}}"
+      state: started
