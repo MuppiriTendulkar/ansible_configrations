@@ -1,0 +1,25 @@
+---
+# tasks file for apache2
+
+- name: Install apche2
+  apt:
+    name: "{{package_name}}"
+    state: present
+  tags:
+  - install
+
+- name: copy Index.html
+  template:
+    src: index.html
+    dest: /var/www/html/index.html
+  tags:
+  - copy
+  notify:
+  - start apache2 service
+
+- name: Debug message
+  debug:
+    msg: "After copt task name the variable value: {{name}}"
+  tags:
+  - debug 
+  - install
